@@ -2,6 +2,13 @@ import { useState } from 'react'
 import './App.css'
 import Card from './components/Card'
 import { Calendar } from 'primereact/calendar';
+import { SelectButton } from 'primereact/selectbutton';
+import { Button } from 'primereact/button';
+import { IconField } from 'primereact/iconfield';
+import { InputIcon } from 'primereact/inputicon'
+import { ColorPicker } from 'primereact/colorpicker';
+import { InputNumber } from 'primereact/inputnumber';
+import { InputText } from 'primereact/inputtext';
         
 
 function App() 
@@ -13,23 +20,26 @@ function App()
   const [age, setAge] = useState(0);
   const [birth, setBirth] = useState(null);
   const [expire, setExpire] = useState(null);
+  const [color, setColor] = useState(null);
 
-  const handleNomChange = (e) => {
+        
+
+  const handleNomChange = (e: { target: { value: any; }; }) => {
     const nom = e.target.value;
     setNom(nom);
   }
 
-  const handlePrenomChange = (e) => {
+  const handlePrenomChange = (e: { target: { value: any; }; }) => {
     const prenom = e.target.value;
     setPrenom(prenom);
   }
 
-  const handleAgeChange = (e) => {
+  const handleAgeChange = (e: { target: { value: any; }; }) => {
     const age = e.target.value;
     setAge(age);
   }
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: { target: { files: any[]; }; }) => {
     
     const file = e.target.files[0];
 
@@ -50,6 +60,8 @@ function App()
       <div className="formulaire">
         <form action="">
 
+          
+
           <input 
               type="file" 
               onChange={handleFileChange}
@@ -60,33 +72,25 @@ function App()
               <img src={img} alt="" style={{ maxWidth: '100px', maxHeight: '100px' }}/>
           )}
           
+          <div className="flex-auto">
+          <InputText value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' />
 
-          <input 
-              type="text"  
-              value={nom}
-              onChange={handleNomChange}
-          />
-
-          <input 
-              type="text" 
-              value={prenom}
-              onChange={handlePrenomChange}
-          />
+          <InputText value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder='Prénom'/>
           
-          <input 
-              type="text" 
-              value={age}
-              onChange={handleAgeChange}
-          />
+          <InputNumber inputId="integeronly" value={age} onValueChange={(e) => setAge(e.value)} placeholder='Age'/>
+            
 
           <Calendar 
               value={birth} 
               onChange={(e) => setBirth(e.value)} 
+              placeholder='Birth Day'
           />
           <Calendar 
               value={expire} 
               onChange={(e) => setExpire(e.value)} 
-          />        
+              placeholder='Expire Day'
+          />     
+          </div>   
         </form>
       </div>
 
@@ -98,9 +102,13 @@ function App()
           birthday={birth ? birth.toLocaleDateString():''}      
           expire={expire ? expire.toLocaleDateString():''}
       />
+
+        
+      
        
     </>
   )
 }
 
 export default App
+

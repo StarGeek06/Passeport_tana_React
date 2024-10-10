@@ -1,82 +1,116 @@
-body 
-{
+body {
   font-family: "Poppins";
 }
 
-.container
-{
-   display: flex;
-   width: 100%;
-   align-items: center;
-   justify-content: center;
-  
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+ 
 }
-h1
-{
+
+h1 {
   font-size: 1rem;
-}
-.container .card 
+} 
+
+h3
 {
-  background-color: rgb(238, 197, 222);
+  text-align: center;
+}
+
+
+.container .card {
+  background-color: rgb(255, 212, 239);
   border-radius: 30px;
   padding: 2rem;
+  height: 320px;
+  width: 400px;
+  position: relative; /* Rendre la carte un conteneur positionné */
 }
-.container .card .logo img  
-{
+
+.container .card .logo img {
   height: 70px;
   border-radius: 10px;
-  z-index: -1;
 }
-.container .card h1 
-{
+
+.container .card h1 {
   font-size: 30px;
 }
 
-.container .card .idts
-{
+.container .card .idts {
   display: flex;
+  justify-content: space-between; /* Espace équilibré entre les éléments */
+  position: absolute;
 }
 
-.container .card .idts .ids 
-{
+.container .card .idts .ids {
   padding-left: 1rem;
+  flex-grow: 1; /* Assurez-vous que cet élément grandit */
 }
 
-.container .card .idts .ids .ids-group
-{
+.container .card .idts .ids .ids-group {
   display: flex;
-  width: 100%;
+  width: 50px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-left: 130px;
 }
 
-.container .card .idts .ids .ids-group p
-{
-  margin-left: 10px;
+.container .card .idts .ids .ids-group p {
 
-}
-.container .card .idts .ids .np 
-{
+  padding-right: 15px;
   color: black;
 }
 
-.container .card .idts .ids .np p 
-{
-  font-weight: bolder;
-  position: relative;
-  right: -50px;
+.container .card .idts .ids .np {
   
+  color: black;
+  height: 50px;
+  width: 100px;
+  padding-left: 2rem;
 }
 
-.container .card .idts .ids .np .profession
-{
-  font-weight: 0px;
-}
-.container .card .idts .profil img
-{
-  height: 120px;
-  border: 3px solid white ;
-  border-radius: 30px;
-  z-index: 1;
+.container .card .idts .ids .np p {
+  font-weight: bolder;
   position: relative;
+}
+
+.container .card .idts .ids .np .profession {
+  font-weight: normal; /* Correction pour enlever "0px" */
+}
+
+.container .card .idts .profil img {
+  height: 120px;
+  width: 120px;
+  background-size: cover;
+  border: 3px solid white;
+  border-radius: 30px;
+  position: relative; /* Positionner relativement à la carte */
   top: -50px;
-  right: -30px;
+  right: -20px;
+  z-index: 1;
+}
+
+.container .card .idts .scan {
+  position: relative;
+  bottom: -80px;
+  left: -290px;
+  height: 100px;
+}
+
+.container .card .idts .scan img {
+  height: 100px;
+}
+
+.container .card .idts .sign {
+  position: relative;
+  bottom: -140px;
+  right: 120px;
+}
+
+.container .card .idts .sign img {
+  height: 60px;
 }
