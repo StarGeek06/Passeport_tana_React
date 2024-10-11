@@ -1,114 +1,116 @@
-import { useState } from 'react'
-import './App.css'
-import Card from './components/Card'
+import { useState, useRef } from 'react';
+import html2canvas from 'html2canvas';
+import './App.css';
+import Card from './components/Card';
 import { Calendar } from 'primereact/calendar';
-import { SelectButton } from 'primereact/selectbutton';
 import { Button } from 'primereact/button';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon'
-import { ColorPicker } from 'primereact/colorpicker';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
-        
 
 function App() 
 {
-   
-  const [img, setImg] =  useState(null)
+  /* Variables */ 
+  const [img, setImg] = useState(null);
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState();
   const [birth, setBirth] = useState(null);
   const [expire, setExpire] = useState(null);
-  const [color, setColor] = useState(null);
+  const passeportRef = useRef(null); 
 
-        
-
-  const handleNomChange = (e: { target: { value: any; }; }) => {
-    const nom = e.target.value;
-    setNom(nom);
-  }
-
-  const handlePrenomChange = (e: { target: { value: any; }; }) => {
-    const prenom = e.target.value;
-    setPrenom(prenom);
-  }
-
-  const handleAgeChange = (e: { target: { value: any; }; }) => {
-    const age = e.target.value;
-    setAge(age);
-  }
-
-  const handleFileChange = (e: { target: { files: any[]; }; }) => {
+  /** Fonctions **/
+  const handleDownload = () => 
+  {
+    const element = passeportRef.current; 
     
-    const file = e.target.files[0];
+    if (element) {
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download =   `passeport-${nom}_${prenom}.png`; // Nom du fichier téléchargé
+        link.click();
+      }).catch((error) => {
+        console.error('Erreur lors de la génération de l\'image :', error);
+      });
+    }
+  };
 
-    if (file)
-    {
-       const reader = new FileReader();
-       reader.onloadend = () => {
-       setImg(reader.result);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImg(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
-  
 
+  
+  const handleUpdate = (e) => {
+    const clicked = document.getElementById("form");
+
+       if(clicked?.style.display == 'none')
+       {
+         clicked.style.display = 'block';
+       }
+       else 
+       {
+         clicked.style.display = 'none';
+       }
+    }
   return (
     <>
-
       <div className="formulaire">
-        <form action="">
+        <form action="" id='form'>
 
-          
-
-          <input 
-              type="file" 
-              onChange={handleFileChange}
+          <input style={{marginTop: '10px'}}
+            type="file" 
+            onChange={handleFileChange}
           />
           
-          { img && (
-            
-              <img src={img} alt="" style={{ maxWidth: '100px', maxHeight: '100px' }}/>
+          {img && (
+            <img src={img} alt="" style={{ maxWidth: '100px', maxHeight: '100px' }} />
           )}
           
           <div className="flex-auto">
-          <InputText value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' />
-
-          <InputText value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder='Prénom'/>
-          
-          <InputNumber inputId="integeronly" value={age} onValueChange={(e) => setAge(e.value)} placeholder='Age'/>
-            
-
-          <Calendar 
+            <InputText value={nom} onChange={(e) => setNom(e.target.value)} placeholder='Nom' />
+            <InputText value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder='Prénom' />
+            <input type='number' value={age} onChange={(e) => setAge(e.target.value)} placeholder='Age' />
+            <Calendar 
               value={birth} 
               onChange={(e) => setBirth(e.value)} 
               placeholder='Birth Day'
-          />
-          <Calendar 
+            />
+            <Calendar 
               value={expire} 
               onChange={(e) => setExpire(e.value)} 
               placeholder='Expire Day'
-          />     
-          </div>   
+            />     
+          </div>  
+          
         </form>
+
+        <div className="btns">
+          <Button onClick={handleUpdate}>Modifier</Button>
+          <Button onClick={handleDownload}>Télécharger</Button>
+        </div>
+        
       </div>
 
-      <Card 
+      {/* Div à capturer */}
+      <div ref={passeportRef}>
+        <Card 
           image={img}
           nom={nom}
           prenom={prenom}
           age={age}
-          birthday={birth ? birth.toLocaleDateString():''}      
-          expire={expire ? expire.toLocaleDateString():''}
-      />
-
-        
-      
-       
+          birthday={birth ? birth.toLocaleDateString() : ''}      
+          expire={expire ? expire.toLocaleDateString() : ''}
+        />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
-
+export default App;

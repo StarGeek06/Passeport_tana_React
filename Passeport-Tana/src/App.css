@@ -1,5 +1,10 @@
-body {
+body 
+{
+  display: flex;
+  flex-direction: column;
   font-family: "Poppins";
+  width: 100%;
+  height: 100vh;
 }
 
 .container {
@@ -28,6 +33,7 @@ h3
   height: 320px;
   width: 400px;
   position: relative; /* Rendre la carte un conteneur positionné */
+  z-index: 999;
 }
 
 .container .card .logo img {
@@ -113,4 +119,46 @@ h3
 
 .container .card .idts .sign img {
   height: 60px;
+}
+
+.formulaire form
+{
+  display: none;
+}
+
+.formulaire .btns
+{
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.formulaire .btns Button 
+{
+  background-color: rgb(255, 212, 239);
+}
+#form
+{
+  background-color: rgba(0,0,0,0.1);
+  z-index: -1;
+  height: 350px;
+  width: 100%;
+  border-radius: 40px;
+}
+
+#form input
+{
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+  margin: 10px;
+  font-family: 'Poppins';
+  padding-left: 1rem;
+
 }

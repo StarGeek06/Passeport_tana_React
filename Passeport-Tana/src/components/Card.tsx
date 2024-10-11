@@ -42,7 +42,7 @@ function Card({image, nom, prenom, age, birthday, expire})
                             {birthday}
                         </p>
                         <p>
-                             <strong>Expiration</strong> <br />
+                             <strong>Exp/of/card</strong> <br />
                             {expire}
                         </p>
                     </div>
